@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uk">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width-device-width, initial-scale=1.0">
+        <title>Мій QR Генератор</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Генератор QR-кодів</h1>
+            <p>Введіть текст або URL-посилання, щоб згенерувати QR-код</p>
+            <input type="text" id="qrDataInput" placeholder="http://example.com">
+            <button id="generateButton">Згенерувати QR</button>
+
+            <div id="qrcodeDisplay"></div>
+
+            <button id="downloadButton" style="display: none;">Завантажити QR</button>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

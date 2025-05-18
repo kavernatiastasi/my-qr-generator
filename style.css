@@ -1,0 +1,56 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+input[type="text"] {
+    width: calc(100% - 22px); /* Враховуємо padding і border */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#qrcodeDisplay {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* Можна додати рамку, щоб було видно, де буде QR */
+    /* border: 1px dashed #ccc; */
+    min-height: 150px; /* Мінімальна висота, щоб контейнер не "стрибав" */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#qrcodeDisplay img { /* Стиль для зображення QR-коду, яке створить бібліотека */
+    max-width: 100%;
+}
