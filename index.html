@@ -12,6 +12,18 @@
             <p>Введіть текст або URL-посилання, щоб згенерувати QR-код</p>
             <input type="text" id="qrDataInput" placeholder="http://example.com">
             <button id="generateButton">Згенерувати QR</button>
+            <div class="size-options" style="margin-top: 15px; margin-bottom: 15px;">
+                <p style="margin-bottom: 5px;">Оберіть розмір QR-коду:</p>
+                <label>
+                    <input type="radio" name="qrSizeOption" value="128"> Малий
+                </label>
+                <label style="margin-left: 10px;">
+                    <input type="radio" name="qrSizeOption" value="256" checked> Середній (за замовчуванням)
+                </label>
+                <label style="margin-left: 10px;">
+                    <input type="radio" name="qrSizeOption" value="384"> Великий
+                </label>
+            </div>
 
             <div id="qrcodeDisplay"></div>
 
