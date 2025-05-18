@@ -1,69 +1,91 @@
 // Отримуємо доступ до HTML елементів
 const qrDataInput = document.getElementById('qrDataInput');
-const generateButton = document.getElementById('generateButton');
+const generateButton = document.getElementById('generateButton'); // Використовуйте, якщо у вас є ця кнопка
 const qrcodeDisplay = document.getElementById('qrcodeDisplay');
 const downloadButton = document.getElementById('downloadButton');
+const sizeRadioButtons = document.getElementsByName('qrSizeOption');
 
 let qrcode = null; // Змінна для зберігання об'єкту QR-коду
 
 // Функція для генерації QR-коду
 function generateQr() {
-    const data = qrDataInput.value; // Отримуємо текст з поля введення
+    const data = qrDataInput.value.trim();
 
-    if (data.trim() === "") { // Перевіряємо, чи поле не порожнє
-        alert("Будь ласка, введіть текст або URL!");
+    qrcodeDisplay.innerHTML = ""; // Завжди очищуємо перед новою генерацією
+    downloadButton.style.display = "none";
+
+    if (data === "") {
+        // Можна додати alert або інше сповіщення, якщо поле порожнє,
+        // але для "чистого коду" поки приберемо alert.
+        // Якщо потрібно, щоб порожнє поле нічого не генерувало:
         return;
     }
 
-    // Очищуємо попередній QR-код, якщо він був
-    qrcodeDisplay.innerHTML = "";
-    downloadButton.style.display = "none"; // Ховаємо кнопку завантаження
+    let selectedSize = 256; // Розмір за замовчуванням
+    for (let i = 0; i < sizeRadioButtons.length; i++) {
+        if (sizeRadioButtons[i].checked) {
+            selectedSize = parseInt(sizeRadioButtons[i].value);
+            break;
+        }
+    }
 
-    // Створюємо новий QR-код за допомогою бібліотеки
-    // 'qrcodeDisplay' - це ID елемента, куди буде вставлено QR-код
     qrcode = new QRCode(qrcodeDisplay, {
         text: data,
-        width: 200,  // Ширина QR-коду в пікселях
-        height: 200, // Висота QR-коду в пікселях
-        colorDark: "#000000", // Колір темних модулів
-        colorLight: "#ffffff", // Колір світлих модулів (фон)
-        correctLevel: QRCode.CorrectLevel.H // Рівень корекції помилок (H - найвищий)
+        width: selectedSize,
+        height: selectedSize,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
 
-    // Показуємо кнопку завантаження, коли QR-код згенеровано
-    // Потрібна невелика затримка, щоб зображення встигло згенеруватися
     setTimeout(() => {
         if (qrcodeDisplay.querySelector('img') || qrcodeDisplay.querySelector('canvas')) {
             downloadButton.style.display = "inline-block";
         }
-    }, 100); // 100 мілісекунд
+    }, 100);
 }
 
 // Функція для завантаження QR-коду
 function downloadQr() {
-    // Бібліотека qrcode.js зазвичай генерує зображення (<img>) або малює на <canvas>
     const imgElement = qrcodeDisplay.querySelector('img');
     const canvasElement = qrcodeDisplay.querySelector('canvas');
-
     let dataUrl = "";
 
     if (imgElement) {
-        dataUrl = imgElement.src; // Отримуємо дані зображення
+        dataUrl = imgElement.src;
     } else if (canvasElement) {
-        dataUrl = canvasElement.toDataURL("image/png"); // Конвертуємо canvas в дані зображення
+        dataUrl = canvasElement.toDataURL("image/png");
     } else {
-        alert("Не вдалося знайти QR-код для завантаження.");
+        // Можна додати alert або інше сповіщення
         return;
     }
 
-    const link = document.createElement('a'); // Створюємо тимчасове посилання
-    link.download = 'my-qrcode.png'; // Назва файлу для завантаження
+    const link = document.createElement('a');
+    link.download = 'qrcode.png';
     link.href = dataUrl;
-    document.body.appendChild(link); // Додаємо посилання на сторінку
-    link.click(); // Імітуємо клік для завантаження
-    document.body.removeChild(link); // Видаляємо тимчасове посилання
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
-// Додаємо обробники подій для кнопок
-generateButton.addEventListener('click', generateQr);
+// Додаємо обробники подій
+if (generateButton) { // Якщо кнопка генерації існує
+    generateButton.addEventListener('click', generateQr);
+} else { // Якщо кнопки немає, генеруємо при введенні
+    qrDataInput.addEventListener('input', generateQr);
+}
+
 downloadButton.addEventListener('click', downloadQr);
+
+sizeRadioButtons.forEach(radio => {
+    radio.addEventListener('change', () => {
+        if (qrDataInput.value.trim() !== "") {
+            generateQr();
+        }
+    });
+});
+
+// Початкова генерація, якщо потрібно (наприклад, якщо є значення в полі вводу при завантаженні)
+// if (qrDataInput.value.trim() !== "") {
+//     generateQr();
+// }
