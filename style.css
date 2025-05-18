@@ -54,3 +54,22 @@ button:hover {
 #qrcodeDisplay img { /* Стиль для зображення QR-коду, яке створить бібліотека */
     max-width: 100%;
 }
+
+.size-options {
+    margin-top: 20px; /* Додає відступ зверху */
+    margin-bottom: 15px; /* Додає відступ знизу */
+}
+
+.size-options p {
+    margin-bottom: 8px; /* Менший відступ для параграфа з заголовком опцій */
+    font-weight: bold;
+}
+
+.size-options label {
+    margin-right: 15px; /* Відступ між опціями */
+    cursor: pointer; /* Показувати курсор-руку при наведенні */
+}
+
+.size-options input[type="radio"] {
+    margin-right: 5px; /* Маленький відступ між радіокнопкою та її текстом */
+}
